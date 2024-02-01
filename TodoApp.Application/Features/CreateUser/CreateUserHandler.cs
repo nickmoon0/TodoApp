@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using Todo.Application.Data.Repositories;
-using Todo.Application.Models;
+using TodoApp.Application.Data.Repositories;
+using TodoApp.Application.Models;
 
-namespace Todo.Application.Features.CreateUser;
+namespace TodoApp.Application.Features.CreateUser;
 
 public class CreateUserHandler : IHandler<CreateUserCommand, CreateUserResponse>
 {

@@ -1,9 +1,9 @@
 ﻿using Microsoft.Extensions.Options;
 using MongoDB.Driver;
-using Todo.Application.Data.Settings;
-using Todo.Application.Models;
+using TodoApp.Application.Data.Settings;
+using TodoApp.Application.Models;
 
-namespace Todo.Application.Data.Repositories;
+namespace TodoApp.Application.Data.Repositories;
 
 public class UserRepository : IUserRepository
 {

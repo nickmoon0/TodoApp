@@ -1,4 +1,4 @@
-﻿namespace Todo.Application.Features.CreateUser;
+﻿namespace TodoApp.Application.Features.CreateUser;
 
 public class CreateUserCommand(string username, string password)
 {

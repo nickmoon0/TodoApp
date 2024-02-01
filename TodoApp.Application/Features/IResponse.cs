@@ -1,4 +1,4 @@
-﻿namespace Todo.Application.Features;
+﻿namespace TodoApp.Application.Features;
 
 public interface IResponse
 {

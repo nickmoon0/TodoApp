@@ -1,6 +1,6 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 
-namespace Todo.Application.Models;
+namespace TodoApp.Application.Models;
 
 public class User
 {

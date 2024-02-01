@@ -1,4 +1,4 @@
-﻿namespace Todo.Application.Data.Settings;
+﻿namespace TodoApp.Application.Data.Settings;
 
 public class MongoDbSettings
 {

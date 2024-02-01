@@ -2,7 +2,7 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TodoApp.Api", "TodoApp.Api\TodoApp.Api.csproj", "{DC13B8B8-965D-4D97-8C2C-862B0BD3DBA8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Todo.Application", "Todo.Application\Todo.Application.csproj", "{97079FD5-6418-485B-93E6-0F285AEA251B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TodoApp.Application", "TodoApp.Application\TodoApp.Application.csproj", "{97079FD5-6418-485B-93E6-0F285AEA251B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,5 +1,5 @@
-using Todo.Application;
-using Todo.Application.Data.Settings;
+using TodoApp.Application;
+using TodoApp.Application.Data.Settings;
 using TodoApp.Api;
 using TodoApp.Api.Endpoints;
 

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Todo.Application.Features;
-using Todo.Application.Features.CreateUser;
+using TodoApp.Application.Features;
+using TodoApp.Application.Features.CreateUser;
 using TodoApp.Api.Contracts;
 
 namespace TodoApp.Api.Services;

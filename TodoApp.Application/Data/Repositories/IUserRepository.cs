@@ -1,6 +1,6 @@
-﻿using Todo.Application.Models;
+﻿using TodoApp.Application.Models;
 
-namespace Todo.Application.Data.Repositories;
+namespace TodoApp.Application.Data.Repositories;
 
 public interface IUserRepository
 {

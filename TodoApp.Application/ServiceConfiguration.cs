@@ -1,9 +1,9 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Todo.Application.Data.Repositories;
-using Todo.Application.Features;
-using Todo.Application.Features.CreateUser;
+using TodoApp.Application.Data.Repositories;
+using TodoApp.Application.Features;
+using TodoApp.Application.Features.CreateUser;
 
-namespace Todo.Application;
+namespace TodoApp.Application;
 
 public static class ServiceConfiguration
 {
