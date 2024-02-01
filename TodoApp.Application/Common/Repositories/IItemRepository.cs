@@ -1,6 +1,6 @@
 ﻿using TodoApp.Application.Models;
 
-namespace TodoApp.Application.Data.Repositories;
+namespace TodoApp.Application.Common.Repositories;
 
 public interface IItemRepository
 {
