@@ -14,6 +14,7 @@ builder.Services.Configure<MongoDbSettings>(
     builder.Configuration.GetSection(nameof(MongoDbSettings)));
 
 builder.Services.RegisterApplicationServices();
+builder.Services.RegisterApiServices();
 
 var app = builder.Build();
 

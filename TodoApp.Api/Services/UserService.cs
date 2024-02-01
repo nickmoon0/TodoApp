@@ -5,14 +5,31 @@ using TodoApp.Api.Contracts;
 
 namespace TodoApp.Api.Services;
 
-public static class UserService
+public class UserService : IUserService
 {
-    public static async Task<IResult> CreateUser(
+    private readonly ILogger<UserService> _logger;
+    public UserService(ILogger<UserService> logger)
+    {
+        _logger = logger;
+    }
+    public async Task<IResult> CreateUser(
         [FromBody] CreateUserContract contract, 
         [FromServices] IHandler<CreateUserCommand,CreateUserResponse> handler)
     {
+        _logger.LogInformation("Received request to create user");
+        
         var command = new CreateUserCommand(contract.Username, contract.Password);
         var result = await handler.Handle(command);
-        return result.Success ? TypedResults.Ok(result) : TypedResults.StatusCode(result.StatusCode);
+        
+        _logger.LogInformation("Finished processing request to create user");
+
+        if (result.Success)
+        {
+            _logger.LogInformation("Request was processed successfully");
+            return TypedResults.Ok(result);
+        }
+
+        _logger.LogInformation("Request failed");
+        return TypedResults.StatusCode(result.StatusCode);
     }
 }
