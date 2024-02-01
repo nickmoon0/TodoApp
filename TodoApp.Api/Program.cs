@@ -6,6 +6,9 @@ using TodoApp.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Add additional config files
+builder.Configuration.AddJsonFile("appsettings.Local.json");
+
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -17,6 +20,7 @@ builder.Services.Configure<MongoDbSettings>(
 builder.Services.RegisterInfrastructure();
 builder.Services.RegisterApplicationServices();
 builder.Services.RegisterApiServices();
+builder.ConfigureAuthentication();
 
 var app = builder.Build();
 
@@ -29,5 +33,10 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
+app.UseAuthorization();
+
 app.RegisterUserEndpoints("/user");
+app.RegisterAuthEndpoints("/auth");
+
 app.Run();
