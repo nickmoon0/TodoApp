@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TodoApp.Api", "TodoApp.Api\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TodoApp.Application", "TodoApp.Application\TodoApp.Application.csproj", "{97079FD5-6418-485B-93E6-0F285AEA251B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TodoApp.Infrastructure", "TodoApp.Infrastructure\TodoApp.Infrastructure.csproj", "{398E7A9F-701B-4DAF-BA01-93C17E1BEA03}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{97079FD5-6418-485B-93E6-0F285AEA251B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{97079FD5-6418-485B-93E6-0F285AEA251B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{97079FD5-6418-485B-93E6-0F285AEA251B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{398E7A9F-701B-4DAF-BA01-93C17E1BEA03}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{398E7A9F-701B-4DAF-BA01-93C17E1BEA03}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{398E7A9F-701B-4DAF-BA01-93C17E1BEA03}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{398E7A9F-701B-4DAF-BA01-93C17E1BEA03}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

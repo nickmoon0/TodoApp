@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using TodoApp.Application.Data.Repositories;
+using TodoApp.Application.Common.Repositories;
 using TodoApp.Application.Models;
 
 namespace TodoApp.Application.Features.CreateUser;

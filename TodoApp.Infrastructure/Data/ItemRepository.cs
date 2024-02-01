@@ -1,9 +1,10 @@
 ﻿using Microsoft.Extensions.Options;
 using MongoDB.Driver;
-using TodoApp.Application.Data.Settings;
+using TodoApp.Application.Common.Repositories;
+using TodoApp.Application.Common.Settings;
 using TodoApp.Application.Models;
 
-namespace TodoApp.Application.Data.Repositories;
+namespace TodoApp.Infrastructure.Data;
 
 public class ItemRepository : IItemRepository
 {

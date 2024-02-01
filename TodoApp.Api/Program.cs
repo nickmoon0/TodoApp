@@ -1,7 +1,8 @@
 using TodoApp.Application;
-using TodoApp.Application.Data.Settings;
 using TodoApp.Api;
 using TodoApp.Api.Endpoints;
+using TodoApp.Application.Common.Settings;
+using TodoApp.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +14,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.Configure<MongoDbSettings>(
     builder.Configuration.GetSection(nameof(MongoDbSettings)));
 
+builder.Services.RegisterInfrastructure();
 builder.Services.RegisterApplicationServices();
 builder.Services.RegisterApiServices();
 

@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using TodoApp.Application.Data.Repositories;
 using TodoApp.Application.Features;
 using TodoApp.Application.Features.CreateUser;
 
@@ -9,9 +8,6 @@ public static class ServiceConfiguration
 {
     public static IServiceCollection RegisterApplicationServices(this IServiceCollection services)
     {
-        services.AddScoped<IUserRepository, UserRepository>();
-        services.AddScoped<IItemRepository, ItemRepository>();
-
         services.AddScoped<IHandler<CreateUserCommand,CreateUserResponse>, CreateUserHandler>();
         
         return services;
