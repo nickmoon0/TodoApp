@@ -1,32 +1,25 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using TodoApp.Application.Common;
 using TodoApp.Application.Models;
+using TodoApp.Infrastructure.Settings;
 
 namespace TodoApp.Infrastructure.Services;
 
 public class TokenService : ITokenService
 {
-    private readonly IConfiguration _config;
-
-    public TokenService(IConfiguration config)
+    private readonly IOptions<JwtSettings> _settings;
+    public TokenService(IOptions<JwtSettings> settings)
     {
-        _config = config;
+        _settings = settings;
     }
     
     public string GenerateToken(User user)
     {
-        var key = _config["Jwt:Key"] ?? throw new InvalidOperationException("No JWT key configured");
-        var issuer = _config["Jwt:Issuer"] ?? throw new InvalidOperationException("No JWT issuer configured");
-        var audience = _config["Jwt:Audience"] ?? 
-                       throw new InvalidOperationException("No JWT audience configured");
-        var tokenLife = int.Parse(_config["Jwt:TokenLife"] ?? 
-                                  throw new InvalidOperationException("No JWT token life configured"));
-
-        var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key));
+        var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_settings.Value.Key));
         var credentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha512);
 
         Claim[] claims = [
@@ -35,10 +28,10 @@ public class TokenService : ITokenService
         ];
         
         var token = new JwtSecurityToken(
-            issuer,
-            audience,
+            _settings.Value.Issuer,
+            _settings.Value.Audience,
             claims,
-            expires: DateTime.Now.AddMinutes(tokenLife),
+            expires: DateTime.Now.AddMinutes(_settings.Value.TokenLife),
             signingCredentials: credentials);
 
         return new JwtSecurityTokenHandler().WriteToken(token);

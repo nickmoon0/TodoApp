@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using TodoApp.Application.Common.Repositories;
-using TodoApp.Application.Common.Settings;
 using TodoApp.Application.Models;
+using TodoApp.Infrastructure.Settings;
 
 namespace TodoApp.Infrastructure.Data;
 

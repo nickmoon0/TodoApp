@@ -1,8 +1,8 @@
 using TodoApp.Application;
 using TodoApp.Api;
 using TodoApp.Api.Endpoints;
-using TodoApp.Application.Common.Settings;
 using TodoApp.Infrastructure;
+using TodoApp.Infrastructure.Settings;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,12 +14,11 @@ builder.Configuration.AddJsonFile("appsettings.Local.json");
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.Configure<MongoDbSettings>(
-    builder.Configuration.GetSection(nameof(MongoDbSettings)));
-
 builder.Services.RegisterInfrastructure();
 builder.Services.RegisterApplicationServices();
 builder.Services.RegisterApiServices();
+
+builder.RegisterSettings();
 builder.ConfigureAuthentication();
 
 var app = builder.Build();
