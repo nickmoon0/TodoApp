@@ -37,5 +37,6 @@ app.UseAuthorization();
 
 app.RegisterUserEndpoints("/user");
 app.RegisterAuthEndpoints("/auth");
+app.RegisterItemEndpoints("/item");
 
 app.Run();
