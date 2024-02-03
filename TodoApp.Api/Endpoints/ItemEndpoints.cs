@@ -1,6 +1,7 @@
 ﻿using TodoApp.Api.Services;
 using TodoApp.Application.Features.CreateItem;
 using TodoApp.Application.Features.DeleteItem;
+using TodoApp.Application.Features.GetItems;
 using TodoApp.Application.Features.UpdateItem;
 
 namespace TodoApp.Api.Endpoints;
@@ -32,6 +33,11 @@ public static class ItemEndpoints
             .WithDescription("Deletes a given item from the database. Will return 404 if the item does not belong to user")
             .Produces<DeleteItemResponse>()
             .Produces(StatusCodes.Status404NotFound);
+
+        group.MapGet("/all", service.GetUsersItems)
+            .WithSummary("Retrieves all of a users items")
+            .WithDescription("Takes the user ID from the given JWT and gets all the users items")
+            .Produces<GetItemsResponse>();
         
         return app;
     }

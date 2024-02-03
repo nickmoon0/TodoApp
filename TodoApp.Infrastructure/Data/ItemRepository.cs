@@ -23,7 +23,7 @@ public class ItemRepository : IItemRepository
     
     public async Task CreateItemAsync(Item item) => await _itemsCollection.InsertOneAsync(item);
 
-    public async Task<List<Item>> GetUsersItems(Guid userId) =>
+    public async Task<List<Item>> GetUsersItemsAsync(Guid userId) =>
         await _itemsCollection.Find(x => x.UserId == userId).ToListAsync();
 
     public async Task UpdateItemAsync(Item item)
