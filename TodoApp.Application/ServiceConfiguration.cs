@@ -2,6 +2,7 @@
 using TodoApp.Application.Features;
 using TodoApp.Application.Features.CreateItem;
 using TodoApp.Application.Features.CreateUser;
+using TodoApp.Application.Features.DeleteItem;
 using TodoApp.Application.Features.LoginUser;
 using TodoApp.Application.Features.UpdateItem;
 
@@ -20,6 +21,7 @@ public static class ServiceConfiguration
         // Item handlers
         services.AddScoped<IHandler<CreateItemCommand, CreateItemResponse>, CreateItemHandler>();
         services.AddScoped<IHandler<UpdateItemCommand, UpdateItemResponse>, UpdateItemHandler>();
+        services.AddScoped<IHandler<DeleteItemCommand, DeleteItemResponse>, DeleteItemHandler>();
         
         return services;
     }

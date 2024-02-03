@@ -36,4 +36,7 @@ public class ItemRepository : IItemRepository
 
         await _itemsCollection.UpdateOneAsync(filter, update);
     }
+
+    public async Task DeleteItemAsync(Guid itemId) => 
+        await _itemsCollection.DeleteOneAsync(x => x.ItemId == itemId);
 }

@@ -3,6 +3,7 @@ using TodoApp.Api.Contracts;
 using TodoApp.Application.Common;
 using TodoApp.Application.Features;
 using TodoApp.Application.Features.CreateItem;
+using TodoApp.Application.Features.DeleteItem;
 using TodoApp.Application.Features.UpdateItem;
 
 namespace TodoApp.Api.Services;
@@ -87,5 +88,37 @@ public class ItemService : IItemService
         
         _logger.LogInformation("Updated item with ID \"{ItemId}\"", item.ItemId);
         return TypedResults.Ok(item);
+    }
+
+    public async Task<IResult> DeleteItem(
+        [FromRoute] Guid itemId,
+        [FromServices] IHandler<DeleteItemCommand, DeleteItemResponse> handler,
+        HttpContext context)
+    {
+        _logger.LogInformation("Request to delete item received");
+        
+        var token = context.Request.Headers.Authorization[0]!.Split(' ')[1];
+        var userId = _tokenService.ExtractUserIdFromToken(token);
+
+        _logger.LogInformation("User \"{UserId}\" requesting to delete item \"{ItemId}\"",
+            userId, itemId);
+        
+        var command = new DeleteItemCommand
+        {
+            UserId = userId,
+            ItemId = itemId
+        };
+
+        var response = await handler.Handle(command);
+
+        if (!response.Success)
+        {
+            _logger.LogInformation("Failed to delete item. Status code {StatusCode}",
+                response.StatusCode);
+            return TypedResults.StatusCode(response.StatusCode);
+        }
+
+        _logger.LogInformation("Successfully deleted item \"{ItemId}\"", itemId);
+        return TypedResults.Ok();
     }
 }

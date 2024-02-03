@@ -1,5 +1,6 @@
 ﻿using TodoApp.Api.Services;
 using TodoApp.Application.Features.CreateItem;
+using TodoApp.Application.Features.DeleteItem;
 using TodoApp.Application.Features.UpdateItem;
 
 namespace TodoApp.Api.Endpoints;
@@ -24,6 +25,12 @@ public static class ItemEndpoints
             .WithSummary("Updates an existing item")
             .WithDescription("Completely updates an object. Any field which is null in the request body will be set to null")
             .Produces<UpdateItemResponse>()
+            .Produces(StatusCodes.Status404NotFound);
+
+        group.MapDelete("/delete/{itemId:guid}", service.DeleteItem)
+            .WithSummary("Deletes an existing item")
+            .WithDescription("Deletes a given item from the database. Will return 404 if the item does not belong to user")
+            .Produces<DeleteItemResponse>()
             .Produces(StatusCodes.Status404NotFound);
         
         return app;
