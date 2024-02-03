@@ -11,6 +11,7 @@ public static class ServiceConfiguration
     {
         services.AddTransient<IUserService, UserService>();
         services.AddTransient<IAuthService, AuthService>();
+        services.AddTransient<IItemService, ItemService>();
         
         return services;
     }
