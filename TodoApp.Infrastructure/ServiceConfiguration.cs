@@ -14,6 +14,7 @@ public static class ServiceConfiguration
     {
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IItemRepository, ItemRepository>();
+        services.AddScoped<ITokenRepository, TokenRepository>();
         
         services.AddTransient<ITokenService, TokenService>();
         
