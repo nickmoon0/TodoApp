@@ -17,7 +17,7 @@ public class TokenService : ITokenService
         _settings = settings;
     }
     
-    public string GenerateToken(User user)
+    public string GenerateAccessToken(User user)
     {
         var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_settings.Value.Key));
         var credentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha512);
@@ -37,7 +37,7 @@ public class TokenService : ITokenService
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
     
-    public Guid ExtractUserIdFromToken(string token)
+    public Guid ExtractUserIdFromAccessToken(string token)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
         var key = Encoding.ASCII.GetBytes(_settings.Value.Key);

@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http;
 using TodoApp.Application.Common;
 using TodoApp.Application.Common.Repositories;
 
@@ -42,7 +42,7 @@ public class LoginUserHandler : IHandler<LoginUserCommand, LoginUserResponse>
         // User credentials are a match
         return new LoginUserResponse()
         {
-            Token = _tokenService.GenerateToken(user),
+            Token = _tokenService.GenerateAccessToken(user),
             Success = true,
             StatusCode = StatusCodes.Status200OK
         };

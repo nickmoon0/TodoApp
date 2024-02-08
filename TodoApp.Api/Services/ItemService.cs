@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using TodoApp.Api.Contracts;
 using TodoApp.Application.Common;
 using TodoApp.Application.Features;
@@ -28,7 +28,7 @@ public class ItemService : IItemService
         _logger.LogInformation("Request to create new item received");
         
         var token = context.Request.Headers.Authorization[0]!.Split(' ')[1];
-        var userId = _tokenService.ExtractUserIdFromToken(token);
+        var userId = _tokenService.ExtractUserIdFromAccessToken(token);
 
         _logger.LogInformation("Requested by user \"{UserId}\"", userId);
         
@@ -63,7 +63,7 @@ public class ItemService : IItemService
         _logger.LogInformation("Request to update item received");
         
         var token = context.Request.Headers.Authorization[0]!.Split(' ')[1];
-        var userId = _tokenService.ExtractUserIdFromToken(token);
+        var userId = _tokenService.ExtractUserIdFromAccessToken(token);
         
         _logger.LogInformation("User \"{UserId}\" requesting to update Item \"{ItemId}\"",
             userId, itemId);
@@ -99,7 +99,7 @@ public class ItemService : IItemService
         _logger.LogInformation("Request to delete item received");
         
         var token = context.Request.Headers.Authorization[0]!.Split(' ')[1];
-        var userId = _tokenService.ExtractUserIdFromToken(token);
+        var userId = _tokenService.ExtractUserIdFromAccessToken(token);
 
         _logger.LogInformation("User \"{UserId}\" requesting to delete item \"{ItemId}\"",
             userId, itemId);
@@ -128,7 +128,7 @@ public class ItemService : IItemService
         HttpContext context)
     {
         var token = context.Request.Headers.Authorization[0]!.Split(' ')[1];
-        var userId = _tokenService.ExtractUserIdFromToken(token);
+        var userId = _tokenService.ExtractUserIdFromAccessToken(token);
 
         var command = new GetItemsCommand { UserId = userId };
         var response = await handler.Handle(command);

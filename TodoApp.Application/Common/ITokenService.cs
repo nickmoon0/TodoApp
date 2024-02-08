@@ -1,9 +1,9 @@
-﻿using TodoApp.Application.Models;
+using TodoApp.Application.Models;
 
 namespace TodoApp.Application.Common;
 
 public interface ITokenService
 {
-    public string GenerateToken(User user);
-    public Guid ExtractUserIdFromToken(string token);
+    public string GenerateAccessToken(User user);
+    public Guid ExtractUserIdFromAccessToken(string token);
 }
