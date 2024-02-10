@@ -18,5 +18,6 @@ public class TokenRepository : ITokenRepository {
     }
 
     public async Task CreateTokenAsync(RefreshToken token) => await _tokenCollection.InsertOneAsync(token);
-    
+    public async Task<RefreshToken?> GetTokenAsync(string token) => 
+        await _tokenCollection.Find(x => x.Token == token).SingleOrDefaultAsync();
 }

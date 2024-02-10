@@ -1,6 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using TodoApp.Application.Features;
 using TodoApp.Application.Features.Auth.LoginUser;
+using TodoApp.Application.Features.Auth.RenewAccessToken;
 using TodoApp.Application.Features.CreateItem;
 using TodoApp.Application.Features.CreateUser;
 using TodoApp.Application.Features.DeleteItem;
@@ -18,6 +19,7 @@ public static class ServiceConfiguration
         
         // Auth handlers
         services.AddScoped<IHandler<LoginUserCommand, LoginUserResponse>, LoginUserHandler>();
+        services.AddScoped<IHandler<RenewAccessTokenCommand, RenewAccessTokenResponse>, RenewAccessTokenHandler>();
         
         // Item handlers
         services.AddScoped<IHandler<CreateItemCommand, CreateItemResponse>, CreateItemHandler>();

@@ -1,5 +1,6 @@
 using TodoApp.Api.Contracts.Responses;
 using TodoApp.Api.Services;
+using TodoApp.Application.Features.Auth.RenewAccessToken;
 
 namespace TodoApp.Api.Endpoints;
 
@@ -18,7 +19,15 @@ public static class AuthEndpoints
             .WithDescription("Returns a JWT if login successful, will return 401 otherwise")
             .Produces<LoginUserResponseContract>()
             .Produces(StatusCodes.Status401Unauthorized);
-            
+
+        group.MapGet("/renew-token", service.RenewToken)
+            .WithSummary("Extracts refresh token and, if valid, renews access token")
+            .WithDescription(
+                "Uses the User ID contained within the refresh token to determine which user to issue access token to")
+            .Produces<RenewAccessTokenResponse>()
+            .Produces(StatusCodes.Status400BadRequest)
+            .Produces(StatusCodes.Status401Unauthorized);
+        
         return app;
     }
 }
