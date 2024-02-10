@@ -7,11 +7,13 @@ namespace TodoApp.Application.Features.Auth.LoginUser;
 public class LoginUserHandler : IHandler<LoginUserCommand, LoginUserResponse>
 {
     private readonly IUserRepository _userRepository;
+    private readonly ITokenRepository _tokenRepository;
     private readonly ITokenService _tokenService;
     
-    public LoginUserHandler(IUserRepository userRepository, ITokenService tokenService)
+    public LoginUserHandler(IUserRepository userRepository, ITokenRepository tokenRepository, ITokenService tokenService)
     {
         _userRepository = userRepository;
+        _tokenRepository = tokenRepository;
         _tokenService = tokenService;
     }
     public async Task<LoginUserResponse> Handle(LoginUserCommand command)
@@ -40,13 +42,15 @@ public class LoginUserHandler : IHandler<LoginUserCommand, LoginUserResponse>
         }
 
         var accessToken = _tokenService.GenerateAccessToken(user);
-        var refreshToken = _tokenService.GenerateRefreshToken(user, accessToken);
+        var refreshToken = _tokenService.GenerateRefreshToken(user);
+
+        await _tokenRepository.CreateTokenAsync(refreshToken);
         
         // User credentials are a match
-        return new LoginUserResponse()
+        return new LoginUserResponse
         {
             AccessToken = accessToken,
-            RefreshToken = refreshToken,
+            RefreshToken = refreshToken.Token,
             Success = true,
             StatusCode = StatusCodes.Status200OK
         };
