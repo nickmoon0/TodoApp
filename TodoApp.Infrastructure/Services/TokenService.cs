@@ -50,7 +50,7 @@ public class TokenService : ITokenService
         var refreshToken = new RefreshToken {
             UserId = user.UserId,
             Token = token,
-            ExpiryDate = DateTime.UtcNow.AddSeconds(30),
+            ExpiryDate = DateTime.UtcNow.AddDays(_settings.Value.RefreshTokenLife),
             Valid = true
         };
 
