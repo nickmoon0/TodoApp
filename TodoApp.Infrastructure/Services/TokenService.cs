@@ -32,7 +32,7 @@ public class TokenService : ITokenService
             _settings.Value.Issuer,
             _settings.Value.Audience,
             claims,
-            expires: DateTime.Now.AddMinutes(_settings.Value.TokenLife),
+            expires: DateTime.Now.AddMinutes(_settings.Value.AccessTokenLife),
             signingCredentials: credentials);
 
         return new JwtSecurityTokenHandler().WriteToken(token);
@@ -42,7 +42,7 @@ public class TokenService : ITokenService
         var refreshToken = new RefreshToken {
             UserId = user.UserId,
             AccessToken = accessToken,
-            ExpiryDate = DateTime.UtcNow.AddDays(7)
+            ExpiryDate = DateTime.Now.AddDays(_settings.Value.RefreshTokenLife)
         };
 
         return refreshToken.AccessToken;
