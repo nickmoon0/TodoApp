@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using TodoApp.Api.Contracts;
+using TodoApp.Api.Contracts.Requests;
 using TodoApp.Application.Common;
 using TodoApp.Application.Features;
 using TodoApp.Application.Features.CreateItem;

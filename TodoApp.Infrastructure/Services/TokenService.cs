@@ -38,12 +38,11 @@ public class TokenService : ITokenService
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
     
-    // Example method within your authentication controller
     public string GenerateRefreshToken(User user, string accessToken) {
         var refreshToken = new RefreshToken {
             UserId = user.UserId,
             AccessToken = accessToken,
-            ExpiryDate = DateTime.UtcNow.AddDays(7) // Set a suitable expiry time
+            ExpiryDate = DateTime.UtcNow.AddDays(7)
         };
 
         return refreshToken.AccessToken;

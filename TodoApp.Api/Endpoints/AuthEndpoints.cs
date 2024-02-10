@@ -1,5 +1,5 @@
+using TodoApp.Api.Contracts.Responses;
 using TodoApp.Api.Services;
-using TodoApp.Application.Features.Auth.LoginUser;
 
 namespace TodoApp.Api.Endpoints;
 
@@ -16,7 +16,7 @@ public static class AuthEndpoints
         group.MapPost("/login", service.LoginUser)
             .WithSummary("Logs in a user and returns a token")
             .WithDescription("Returns a JWT if login successful, will return 401 otherwise")
-            .Produces<LoginUserResponse>()
+            .Produces<LoginUserResponseContract>()
             .Produces(StatusCodes.Status401Unauthorized);
             
         return app;
