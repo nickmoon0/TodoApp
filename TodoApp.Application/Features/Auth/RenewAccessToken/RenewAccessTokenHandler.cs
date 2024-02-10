@@ -28,7 +28,7 @@ public class RenewAccessTokenHandler : IHandler<RenewAccessTokenCommand, RenewAc
     {
         // Get token
         var token = await _tokenRepository.GetTokenAsync(command.RefreshToken);
-        if (token == null || token.ExpiryDate < DateTime.Now)
+        if (token == null || token.ExpiryDate < DateTime.UtcNow)
         {
             _logger.LogInformation("Token does not exist or has expired");
             return new RenewAccessTokenResponse

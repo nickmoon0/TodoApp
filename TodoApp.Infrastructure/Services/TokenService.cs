@@ -38,7 +38,7 @@ public class TokenService : ITokenService
             _settings.Value.Issuer,
             _settings.Value.Audience,
             claims,
-            expires: DateTime.Now.AddMinutes(_settings.Value.AccessTokenLife),
+            expires: DateTime.UtcNow.AddMinutes(_settings.Value.AccessTokenLife),
             signingCredentials: credentials);
 
         return new JwtSecurityTokenHandler().WriteToken(token);
@@ -50,7 +50,7 @@ public class TokenService : ITokenService
         var refreshToken = new RefreshToken {
             UserId = user.UserId,
             Token = token,
-            ExpiryDate = DateTime.Now.AddDays(_settings.Value.RefreshTokenLife),
+            ExpiryDate = DateTime.UtcNow.AddSeconds(30),
             Valid = true
         };
 
