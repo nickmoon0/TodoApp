@@ -5,6 +5,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using TodoApp.Application.Common;
 using TodoApp.Application.Models;
+using TodoApp.Application.Models.Auth;
 using TodoApp.Infrastructure.Settings;
 
 namespace TodoApp.Infrastructure.Services;
@@ -37,6 +38,18 @@ public class TokenService : ITokenService
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
     
+    // Example method within your authentication controller
+    public string GenerateRefreshToken(User user, string accessToken) {
+        var refreshToken = new RefreshToken {
+            UserId = user.UserId,
+            AccessToken = accessToken,
+            ExpiryDate = DateTime.UtcNow.AddDays(7) // Set a suitable expiry time
+        };
+
+        return refreshToken.AccessToken;
+    }
+
+
     public Guid ExtractUserIdFromAccessToken(string token)
     {
         var tokenHandler = new JwtSecurityTokenHandler();

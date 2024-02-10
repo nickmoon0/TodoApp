@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Http;
 using TodoApp.Application.Common;
 using TodoApp.Application.Common.Repositories;
 
-namespace TodoApp.Application.Features.LoginUser;
+namespace TodoApp.Application.Features.Auth.LoginUser;
 
 public class LoginUserHandler : IHandler<LoginUserCommand, LoginUserResponse>
 {
@@ -38,11 +38,15 @@ public class LoginUserHandler : IHandler<LoginUserCommand, LoginUserResponse>
                 StatusCode = StatusCodes.Status401Unauthorized
             };
         }
+
+        var accessToken = _tokenService.GenerateAccessToken(user);
+        var refreshToken = _tokenService.GenerateRefreshToken(user, accessToken);
         
         // User credentials are a match
         return new LoginUserResponse()
         {
-            Token = _tokenService.GenerateAccessToken(user),
+            AccessToken = accessToken,
+            RefreshToken = refreshToken,
             Success = true,
             StatusCode = StatusCodes.Status200OK
         };

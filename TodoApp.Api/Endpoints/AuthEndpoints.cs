@@ -1,5 +1,5 @@
-﻿using TodoApp.Api.Services;
-using TodoApp.Application.Features.LoginUser;
+using TodoApp.Api.Services;
+using TodoApp.Application.Features.Auth.LoginUser;
 
 namespace TodoApp.Api.Endpoints;
 

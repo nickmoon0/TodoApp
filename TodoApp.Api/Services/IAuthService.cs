@@ -1,6 +1,6 @@
-﻿using TodoApp.Api.Contracts;
+using TodoApp.Api.Contracts;
 using TodoApp.Application.Features;
-using TodoApp.Application.Features.LoginUser;
+using TodoApp.Application.Features.Auth.LoginUser;
 
 namespace TodoApp.Api.Services;
 

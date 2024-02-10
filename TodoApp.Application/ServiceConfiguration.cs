@@ -1,10 +1,10 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 using TodoApp.Application.Features;
+using TodoApp.Application.Features.Auth.LoginUser;
 using TodoApp.Application.Features.CreateItem;
 using TodoApp.Application.Features.CreateUser;
 using TodoApp.Application.Features.DeleteItem;
 using TodoApp.Application.Features.GetItems;
-using TodoApp.Application.Features.LoginUser;
 using TodoApp.Application.Features.UpdateItem;
 
 namespace TodoApp.Application;
