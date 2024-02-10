@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using TodoApp.Api.Common;
 using TodoApp.Api.Contracts.Requests;
 using TodoApp.Api.Contracts.Responses;
 using TodoApp.Application.Features;
@@ -34,17 +35,8 @@ public class AuthService : IAuthService
         if (response.Success)
         {
             _logger.LogInformation("User {Username} has authenticated", contract.Username);
-
-            // Create refresh token cookie (set to http-only)
-            var cookieOptions = new CookieOptions
-            {
-                HttpOnly = true,
-                Secure = false,
-                SameSite = SameSiteMode.Strict,
-                Expires = DateTimeOffset.UtcNow.AddDays(7)
-            };
-            context.Response.Cookies.Append("RefreshToken", response.RefreshToken!, cookieOptions);
             
+            Helpers.AddRefreshTokenCookie(context, response.RefreshToken!);
             return TypedResults.Ok(new LoginUserResponseContract
             {
                 AccessToken = response.AccessToken,
@@ -76,7 +68,14 @@ public class AuthService : IAuthService
         if (response.Success)
         {
             _logger.LogInformation("Replaced access token with token {AccessToken}", response.AccessToken);
-            return TypedResults.Ok(response);
+            
+            Helpers.AddRefreshTokenCookie(context, response.RefreshToken!);
+            return TypedResults.Ok(new RenewAccessTokenResponseContract
+            {
+                AccessToken = response.AccessToken,
+                Success = response.Success,
+                StatusCode = response.StatusCode
+            });
         }
         
         _logger.LogInformation("Failed to issue a new access token for {RefreshToken}", refreshToken);

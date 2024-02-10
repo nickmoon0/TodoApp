@@ -40,14 +40,15 @@ public class RenewAccessTokenHandler : IHandler<RenewAccessTokenCommand, RenewAc
         
         // Get user
         var user = await _userRepository.GetUserByIdAsync(token.UserId);
-        var newToken = _tokenService.GenerateAccessToken(user);
         
-        // Issue new token
-        _logger.LogInformation("Successfully generated new token");
+        // Rotate tokens
+        var tokenSet = await _tokenService.RotateTokens(user);
+        _logger.LogInformation("Successfully generated new access and refresh token");
 
         return new RenewAccessTokenResponse
         {
-            AccessToken = newToken,
+            AccessToken = tokenSet.NewAccessToken,
+            RefreshToken = tokenSet.NewRefreshToken.Token,
             Success = true,
             StatusCode = StatusCodes.Status200OK
         };

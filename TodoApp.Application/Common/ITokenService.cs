@@ -5,7 +5,6 @@ namespace TodoApp.Application.Common;
 
 public interface ITokenService
 {
-    public string GenerateAccessToken(User user);
-    public RefreshToken GenerateRefreshToken(User user);
+    public Task<TokenSet> RotateTokens(User user);
     public Guid ExtractUserIdFromAccessToken(string token);
 }

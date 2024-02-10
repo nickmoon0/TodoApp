@@ -41,16 +41,13 @@ public class LoginUserHandler : IHandler<LoginUserCommand, LoginUserResponse>
             };
         }
 
-        var accessToken = _tokenService.GenerateAccessToken(user);
-        var refreshToken = _tokenService.GenerateRefreshToken(user);
-
-        await _tokenRepository.CreateTokenAsync(refreshToken);
+        var tokenSet = await _tokenService.RotateTokens(user);
         
         // User credentials are a match
         return new LoginUserResponse
         {
-            AccessToken = accessToken,
-            RefreshToken = refreshToken.Token,
+            AccessToken = tokenSet.NewAccessToken,
+            RefreshToken = tokenSet.NewRefreshToken.Token,
             Success = true,
             StatusCode = StatusCodes.Status200OK
         };

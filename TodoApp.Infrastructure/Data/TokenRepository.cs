@@ -20,4 +20,18 @@ public class TokenRepository : ITokenRepository {
     public async Task CreateTokenAsync(RefreshToken token) => await _tokenCollection.InsertOneAsync(token);
     public async Task<RefreshToken?> GetTokenAsync(string token) => 
         await _tokenCollection.Find(x => x.Token == token).SingleOrDefaultAsync();
+
+    public async Task<List<RefreshToken>> GetTokensByUserAsync(Guid userId) => 
+        await _tokenCollection.Find(x => x.UserId == userId && x.Valid == true).ToListAsync();
+    
+
+    // Dont update token object when invalidating as no parameters aside from 'Valid' should ever be changed
+    public async Task InvalidateTokenAsync(Guid tokenId)
+    {
+        var filter = Builders<RefreshToken>.Filter.Eq(x => x.Id, tokenId);
+        var update = Builders<RefreshToken>.Update
+            .Set(x => x.Valid, false);
+
+        await _tokenCollection.UpdateOneAsync(filter, update);
+    }
 }

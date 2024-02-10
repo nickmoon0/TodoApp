@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using TodoApp.Application.Common;
+using TodoApp.Application.Common.Repositories;
 using TodoApp.Application.Models;
 using TodoApp.Application.Models.Auth;
 using TodoApp.Infrastructure.Settings;
@@ -13,13 +14,17 @@ namespace TodoApp.Infrastructure.Services;
 
 public class TokenService : ITokenService
 {
+    private readonly ITokenRepository _tokenRepository;
     private readonly IOptions<JwtSettings> _settings;
-    public TokenService(IOptions<JwtSettings> settings)
+    public TokenService(
+        IOptions<JwtSettings> settings, 
+        ITokenRepository tokenRepository)
     {
         _settings = settings;
+        _tokenRepository = tokenRepository;
     }
     
-    public string GenerateAccessToken(User user)
+    private string GenerateAccessToken(User user)
     {
         var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_settings.Value.Key));
         var credentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha512);
@@ -39,18 +44,42 @@ public class TokenService : ITokenService
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
     
-    public RefreshToken GenerateRefreshToken(User user)
+    private RefreshToken GenerateRefreshToken(User user)
     {
         var token = Convert.ToBase64String(RandomNumberGenerator.GetBytes(64));
         var refreshToken = new RefreshToken {
             UserId = user.UserId,
             Token = token,
-            ExpiryDate = DateTime.Now.AddDays(_settings.Value.RefreshTokenLife)
+            ExpiryDate = DateTime.Now.AddDays(_settings.Value.RefreshTokenLife),
+            Valid = true
         };
 
         return refreshToken;
     }
 
+    public async Task<TokenSet> RotateTokens(User user)
+    {
+        // Get existing tokens and invalidate them
+        var existingTokens = await _tokenRepository.GetTokensByUserAsync(user.UserId);
+        foreach (var token in existingTokens)
+        {
+            // There should only be 1 or 0 valid tokens at a time, treat as a list in case there happen to be many
+            await _tokenRepository.InvalidateTokenAsync(token.Id);
+        }
+        
+        // Generate new access and refresh token
+        var accessToken = GenerateAccessToken(user);
+        var refreshToken = GenerateRefreshToken(user);
+
+        // Add new refresh token to database
+        await _tokenRepository.CreateTokenAsync(refreshToken);
+        
+        return new TokenSet
+        {
+            NewRefreshToken = refreshToken,
+            NewAccessToken = accessToken
+        };
+    }
 
     public Guid ExtractUserIdFromAccessToken(string token)
     {
