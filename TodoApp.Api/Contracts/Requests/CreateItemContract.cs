@@ -1,6 +1,6 @@
-﻿namespace TodoApp.Api.Contracts;
+﻿namespace TodoApp.Api.Contracts.Requests;
 
-public class UpdateItemContract
+public class CreateItemContract
 {
     public required string Name { get; set; }
     public string? Description { get; set; }

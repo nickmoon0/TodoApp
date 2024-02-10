@@ -9,3 +9,15 @@ Content-Type: application/json
 }
 
 ###
+POST {{TodoApp.Api_HostAddress}}/auth/login
+Content-Type: application/json
+
+{
+  "Username": "Person",
+  "Password": "Test"
+}
+
+###
+GET {{TodoApp.Api_HostAddress}}/auth/renew-token
+
+###
