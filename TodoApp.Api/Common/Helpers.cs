@@ -1,6 +1,4 @@
-﻿using TodoApp.Application.Models.Auth;
-
-namespace TodoApp.Api.Common;
+﻿namespace TodoApp.Api.Common;
 
 public static class Helpers
 {
