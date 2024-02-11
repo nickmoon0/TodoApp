@@ -15,6 +15,12 @@ public class TokenRepository : ITokenRepository {
         var database = mongoClient.GetDatabase(settings.Value.DatabaseName);
 
         _tokenCollection = database.GetCollection<RefreshToken>(settings.Value.TokenCollection);
+        
+        // Ensure token is unique
+        var indexOptions = new CreateIndexOptions { Unique = true };
+        var indexKeys = Builders<RefreshToken>.IndexKeys.Ascending(token => token.Token);
+        var indexModel = new CreateIndexModel<RefreshToken>(indexKeys, indexOptions);
+        _tokenCollection.Indexes.CreateOne(indexModel);
     }
 
     public async Task CreateTokenAsync(RefreshToken token) => await _tokenCollection.InsertOneAsync(token);

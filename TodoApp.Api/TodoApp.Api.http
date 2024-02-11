@@ -4,7 +4,7 @@ POST {{TodoApp.Api_HostAddress}}/user/create
 Content-Type: application/json
 
 {
-  "Username": "Person",
+  "Username": "Person5",
   "Password": "Test"
 }
 
@@ -19,5 +19,9 @@ Content-Type: application/json
 
 ###
 GET {{TodoApp.Api_HostAddress}}/auth/renew-token
+
+###
+GET {{TodoApp.Api_HostAddress}}/item/all
+Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJmNTBhYmRhNS00N2M3LTRhOTEtYWI2Mi1mOGVjNmQ1OWZhNzUiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IlBlcnNvbiIsImV4cCI6MTcwNzYyMDM0OCwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwIiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwIn0.ZFRItlNfx-1lhHUf6dZ2p4-hwbVAzovf8tqoAkmvp8lup5nckJ-XRNTOjB9sKvvFDSVOnpN34-PxoUmDRkiZUQ
 
 ###
