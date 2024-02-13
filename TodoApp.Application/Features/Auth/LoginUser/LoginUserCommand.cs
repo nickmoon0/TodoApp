@@ -1,4 +1,4 @@
-﻿namespace TodoApp.Application.Features.LoginUser;
+﻿namespace TodoApp.Application.Features.Auth.LoginUser;
 
 public class LoginUserCommand
 {

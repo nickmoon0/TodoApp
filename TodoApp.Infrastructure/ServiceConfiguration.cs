@@ -12,8 +12,9 @@ public static class ServiceConfiguration
 {
     public static IServiceCollection RegisterInfrastructure(this IServiceCollection services)
     {
-        services.AddScoped<IUserRepository, UserRepository>();
-        services.AddScoped<IItemRepository, ItemRepository>();
+        services.AddTransient<IUserRepository, UserRepository>();
+        services.AddTransient<IItemRepository, ItemRepository>();
+        services.AddTransient<ITokenRepository, TokenRepository>();
         
         services.AddTransient<ITokenService, TokenService>();
         
