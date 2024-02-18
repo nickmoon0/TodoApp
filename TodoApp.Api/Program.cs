@@ -14,6 +14,7 @@ builder.Configuration.AddJsonFile("appsettings.Local.json");
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.ConfigureCors();
 builder.Services.RegisterInfrastructure();
 builder.Services.RegisterApplicationServices();
 builder.Services.RegisterApiServices();
@@ -29,6 +30,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors("AllowSpa");
 
 app.UseHttpsRedirection();
 

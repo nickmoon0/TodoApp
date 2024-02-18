@@ -44,4 +44,18 @@ public static class ServiceConfiguration
         
         return builder;
     }
+
+    public static IServiceCollection ConfigureCors(this IServiceCollection services)
+    {
+        services.AddCors(options =>
+        {
+            options.AddPolicy("AllowSpa", 
+                builder => builder
+                    .WithOrigins("http://localhost:3000")
+                    .AllowAnyHeader()
+                    .AllowAnyMethod());
+        });
+
+        return services;
+    }
 }
