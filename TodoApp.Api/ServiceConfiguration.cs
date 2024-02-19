@@ -53,7 +53,9 @@ public static class ServiceConfiguration
                 builder => builder
                     .WithOrigins("http://localhost:3000")
                     .AllowAnyHeader()
-                    .AllowAnyMethod());
+                    .AllowAnyMethod()
+                    .AllowCredentials()
+                );
         });
 
         return services;
