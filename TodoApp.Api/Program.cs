@@ -2,7 +2,7 @@ using TodoApp.Application;
 using TodoApp.Api;
 using TodoApp.Api.Endpoints;
 using TodoApp.Infrastructure;
-using TodoApp.Infrastructure.Settings;
+using ServiceConfiguration = TodoApp.Api.ServiceConfiguration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,7 +31,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseCors("AllowSpa");
+app.UseCors(ServiceConfiguration.LocalhostCORSPolicy);
 
 app.UseHttpsRedirection();
 
