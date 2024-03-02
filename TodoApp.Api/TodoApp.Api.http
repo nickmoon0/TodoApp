@@ -4,7 +4,7 @@ POST {{TodoApp.Api_HostAddress}}/user/create
 Content-Type: application/json
 
 {
-  "Username": "Person5",
+  "Username": "Person6",
   "Password": "Test"
 }
 

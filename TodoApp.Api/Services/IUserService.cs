@@ -8,6 +8,8 @@ namespace TodoApp.Api.Services;
 
 public interface IUserService
 {
-    public Task<IResult> CreateUser(CreateUserContract contract,
+    public Task<IResult> CreateUser(
+        HttpContext context, 
+        CreateUserContract contract,
         IHandler<CreateUserCommand, CreateUserResponse> handler);
 }
