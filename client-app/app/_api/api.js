@@ -9,7 +9,7 @@ const api = axios.create({
  * Defining request interceptor
  */
 api.interceptors.request.use((config) => {
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem(process.env.NEXT_PUBLIC_ACCESS_TOKEN);
   if (token) {
     config.headers.Authorization = `Bearer ${token}`
   }
@@ -35,7 +35,7 @@ api.interceptors.response.use(
 
         // Overwrite old token with new one
         const token = response.data.accessToken;
-        localStorage.setItem('token', token);
+        localStorage.setItem(process.env.NEXT_PUBLIC_ACCESS_TOKEN, token);
 
         originalRequest.headers.Authorization = `Bearer ${token}`;
         return axios(originalRequest);

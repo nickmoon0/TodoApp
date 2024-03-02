@@ -22,7 +22,7 @@ const RegisterForm = () => {
       const response = await api.post("/user/create", { username, password });
 
       const token = response.data.accessToken;
-      localStorage.setItem('token', token);
+      localStorage.setItem(process.env.NEXT_PUBLIC_ACCESS_TOKEN, token);
       
       router.push('/');
     } catch (error) {

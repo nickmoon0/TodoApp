@@ -20,17 +20,9 @@ export default function Home() {
   }, []);
 
   return (
-    <>
-      <h1>Hello World!</h1>
-      <ul>
-        {items.map((item) => (
-          <li key={item.itemId}>
-            <p>Name: {item.name}</p>
-            {item.description && <p>Description: {item.description}</p>}
-            <p>Completed: {item.completed ? 'Yes' : 'No'}</p>
-          </li>
-        ))}
-      </ul>
-    </>
+    <div>
+      {/* TODO: Create loading screen */}
+      <p>Loading...</p>
+    </div>
   );
 }

@@ -22,7 +22,7 @@ const LoginForm = () => {
       const response = await api.post("/auth/login", { username, password });
       
       const token = response.data.accessToken;
-      localStorage.setItem('token', token);
+      localStorage.setItem(process.env.NEXT_PUBLIC_ACCESS_TOKEN, token);
       
       // TODO: Push to homepage
       router.push("/");
