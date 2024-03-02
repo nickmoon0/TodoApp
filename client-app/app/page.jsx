@@ -1,12 +1,13 @@
 'use client';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
+import { getToken } from '@/lib/getToken';
 
 const RootPage = () => {  
   const router = useRouter();
 
   useEffect(() => {
-    const token = localStorage.getItem(process.env.NEXT_PUBLIC_ACCESS_TOKEN);
+    const token = getToken();
 
     if (token) {
       router.replace('/home');

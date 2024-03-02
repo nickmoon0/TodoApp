@@ -5,7 +5,7 @@
             "@/hooks/*": ["./app/_hooks/*"],
             "@/components/*": ["./app/_components/*"],
             "@/styles/*": ["./app/_styles/*"],
-            "@/utils/*": ["./app/_utils/*"]
+            "@/lib/*": ["./app/_lib/*"]
         }
     }
   }

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { getToken, setToken } from './getToken';
 const baseURL = process.env.NEXT_PUBLIC_BASE_URL
 
 const api = axios.create({
@@ -9,7 +10,7 @@ const api = axios.create({
  * Defining request interceptor
  */
 api.interceptors.request.use((config) => {
-  const token = localStorage.getItem(process.env.NEXT_PUBLIC_ACCESS_TOKEN);
+  const token = getToken();
   if (token) {
     config.headers.Authorization = `Bearer ${token}`
   }
@@ -35,7 +36,7 @@ api.interceptors.response.use(
 
         // Overwrite old token with new one
         const token = response.data.accessToken;
-        localStorage.setItem(process.env.NEXT_PUBLIC_ACCESS_TOKEN, token);
+        setToken(token);
 
         originalRequest.headers.Authorization = `Bearer ${token}`;
         return axios(originalRequest);
