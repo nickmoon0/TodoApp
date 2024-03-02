@@ -1,8 +1,11 @@
 import React from 'react'
+import ItemList from '@/components/ItemList'
 
 const HomePage = () => {
   return (
-    <div>HomePage</div>
+    <div>
+      <ItemList />
+    </div>
   )
 }
 

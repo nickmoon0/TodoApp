@@ -2,7 +2,7 @@
 import api from '@/utils/api';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react'
-import ErrorMessage from './ErrorMessage';
+import ErrorMessage from '../ErrorMessage';
 
 const RegisterForm = () => {
   const router = useRouter();

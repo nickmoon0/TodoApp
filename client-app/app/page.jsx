@@ -13,7 +13,7 @@ const RootPage = () => {
     } else {
       router.replace('/login');
     }
-  }, []);
+  }, [router]);
 
   return (
     <div>
