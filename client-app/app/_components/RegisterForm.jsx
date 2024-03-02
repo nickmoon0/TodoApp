@@ -21,10 +21,10 @@ const RegisterForm = () => {
     try {
       const response = await api.post("/user/create", { username, password });
 
-      // TODO: get token and store in local storage once backend updated
-
-      // TODO: redirect to home page
-      router.push('/login');
+      const token = response.data.accessToken;
+      localStorage.setItem('token', token);
+      
+      router.push('/');
     } catch (error) {
       setErrorMessage('Failed to create account.');
     }
