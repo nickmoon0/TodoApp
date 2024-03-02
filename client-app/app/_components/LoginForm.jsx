@@ -1,14 +1,21 @@
 'use client';
-import api from '@/api';
+import api from '@/utils/api';
 import { useRouter } from 'next/navigation';
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import ErrorMessage from './ErrorMessage';
+import isValidToken from '../_utils/isValidToken';
 
 const LoginForm = () => {
   const router = useRouter();
   const [errorMessage, setErrorMessage] = useState('');
   const [username, setUsername] = useState(''); // Only used to check if field has value
   const [password, setPassword] = useState(''); // Only used to check if field has value
+
+  useEffect(() => {
+    if (isValidToken()) {
+      router.replace('/home');
+    }
+  }, []);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -24,8 +31,7 @@ const LoginForm = () => {
       const token = response.data.accessToken;
       localStorage.setItem(process.env.NEXT_PUBLIC_ACCESS_TOKEN, token);
       
-      // TODO: Push to homepage
-      router.push("/");
+      router.push('/home');
     } catch (error) {
       setErrorMessage('Login failed. Check username and password.');
     }

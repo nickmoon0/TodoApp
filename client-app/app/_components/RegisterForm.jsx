@@ -1,5 +1,5 @@
 'use client';
-import api from '@/api';
+import api from '@/utils/api';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react'
 import ErrorMessage from './ErrorMessage';
@@ -24,7 +24,7 @@ const RegisterForm = () => {
       const token = response.data.accessToken;
       localStorage.setItem(process.env.NEXT_PUBLIC_ACCESS_TOKEN, token);
       
-      router.push('/');
+      router.push('/home');
     } catch (error) {
       setErrorMessage('Failed to create account.');
     }
