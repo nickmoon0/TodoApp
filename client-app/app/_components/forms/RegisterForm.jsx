@@ -1,8 +1,9 @@
 'use client';
-import api from '@/utils/api';
+import api from '@/lib/api';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react'
 import ErrorMessage from '../ErrorMessage';
+import { setToken } from '@/lib/getToken';
 
 const RegisterForm = () => {
   const router = useRouter();
@@ -22,7 +23,7 @@ const RegisterForm = () => {
       const response = await api.post("/user/create", { username, password });
 
       const token = response.data.accessToken;
-      localStorage.setItem(process.env.NEXT_PUBLIC_ACCESS_TOKEN, token);
+      setToken(token);
       
       router.push('/home');
     } catch (error) {

@@ -1,8 +1,9 @@
 'use client';
-import api from '@/utils/api';
+import api from '@/lib/api';
 import { useRouter } from 'next/navigation';
 import React, { useState, useEffect } from 'react'
 import ErrorMessage from '@/components/ErrorMessage';
+import { getToken, setToken } from '@/lib/getToken';
 
 const LoginForm = () => {
   const router = useRouter();
@@ -12,7 +13,7 @@ const LoginForm = () => {
 
   useEffect(() => {
     // Send to homepage if a valid access token is present
-    const token = localStorage.getItem(process.env.NEXT_PUBLIC_ACCESS_TOKEN);
+    const token = getToken();
     if (token) {
       router.replace('/home');
     }
@@ -30,7 +31,7 @@ const LoginForm = () => {
       const response = await api.post("/auth/login", { username, password });
       
       const token = response.data.accessToken;
-      localStorage.setItem(process.env.NEXT_PUBLIC_ACCESS_TOKEN, token);
+      setToken(token);
       
       router.push('/home');
     } catch (error) {
