@@ -3,7 +3,8 @@ import { getToken, setToken } from './getToken';
 const baseURL = process.env.NEXT_PUBLIC_BASE_URL
 
 const api = axios.create({
-  baseURL: baseURL
+  baseURL: baseURL,
+  withCredentials: true // Required to store cross-origin cookies
 });
 
 /*
@@ -11,6 +12,7 @@ const api = axios.create({
  */
 api.interceptors.request.use((config) => {
   const token = getToken();
+
   if (token) {
     config.headers.Authorization = `Bearer ${token}`
   }
@@ -31,7 +33,7 @@ api.interceptors.response.use(
       originalRequest._retry = true;
       try {
         const response = await axios.get(`${baseURL}/auth/renew-token`, {
-          withCredentials: true // Include http-only refresh token
+          withCredentials: true // Attach refresh-token
         });
 
         // Overwrite old token with new one
