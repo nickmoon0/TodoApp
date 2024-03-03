@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import api from '@/lib/api';
 import ErrorAlert from '@/components/errors/ErrorAlert';
+import EditableField from '@/components/EditableField';
 
 const ItemList = () => {
   const [items, setItems] = useState([]);
@@ -26,6 +27,25 @@ const ItemList = () => {
     setTimeout(() => {
       setShowError(false);
     }, 3000); // Show the alert for 3 seconds
+  };
+
+  const handleItemUpdate = async (itemId, field, newValue) => {
+    const updatedItems = items.map((item) => {
+      if (item.itemId === itemId) {
+        return { ...item, [field]: newValue };
+      }
+      return item;
+    });
+
+    setItems(updatedItems);
+
+    const updatedItem = updatedItems.find(x => x.itemId === itemId);
+    try {
+      await api.put(`/item/update/${itemId}`, updatedItem);
+    } catch (error) {
+      triggerErrorAlert('Failed to update item');
+      setItems(items); // Rollback changes on screen
+    }
   };
 
   const handleCheckboxChange = async (index) => {
@@ -55,7 +75,7 @@ const ItemList = () => {
     });
 
     setItems(updatedItems);
-    // TODO: Post/put updated items back to server as a list
+    // TODO: Post/put updated items back to server as a list. Need to add endpoint to backend
   }
 
   return (
@@ -77,15 +97,28 @@ const ItemList = () => {
           <tbody>
             {items.map((item, index) => (
               <tr key={index}>
-                <th>
+                <td>
                   <input
                     type='checkbox'
                     className='checkbox'
                     checked={item.completed}
                     onChange={() => handleCheckboxChange(index)} />
-                </th>
-                <th>{item.name}</th>
-                <th>{item.description}</th>
+                </td>
+                <td>
+                  <EditableField
+                    text={item.name}
+                    placeHolderText='No Name'
+                    onTextChange={(newValue) => handleItemUpdate(item.itemId, 'name', newValue)}
+                  />
+                </td>
+                <td>
+                  <EditableField
+                    text={item.description}
+                    placeHolderText='No Description'
+                    onTextChange={(newValue) => handleItemUpdate(item.itemId, 'description', newValue)}
+                  />
+                </td>
+
               </tr>
             ))}
           </tbody>
