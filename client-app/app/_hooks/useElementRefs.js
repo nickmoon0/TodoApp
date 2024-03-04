@@ -1,4 +1,4 @@
-import { useElementRefsContext } from '../_contexts/ElementRefsContext';
+import { useElementRefsContext } from '@/contexts/ElementRefsContext';
 
 const useElementRefs = () => {
   const { 

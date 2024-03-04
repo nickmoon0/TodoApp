@@ -1,7 +1,7 @@
 import api from '@/lib/api';
 import { useState, useEffect } from 'react';
 import { useItemsContext } from '@/contexts/ItemsContext';
-import { useElementRefsContext } from '../_contexts/ElementRefsContext';
+import { useElementRefsContext } from '@/contexts/ElementRefsContext';
 
 const useItems = () => {
   const { 
