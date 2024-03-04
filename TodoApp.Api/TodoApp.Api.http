@@ -4,7 +4,7 @@ POST {{TodoApp.Api_HostAddress}}/user/create
 Content-Type: application/json
 
 {
-  "Username": "Person5",
+  "Username": "Person6",
   "Password": "Test"
 }
 
@@ -23,5 +23,16 @@ GET {{TodoApp.Api_HostAddress}}/auth/renew-token
 ###
 GET {{TodoApp.Api_HostAddress}}/item/all
 Authorization: Bearer 
+
+###
+POST {{TodoApp.Api_HostAddress}}/item/create
+Content-Type: application/json
+Authorization: Bearer 
+
+{
+  "Name": "Test Item 2",
+  "Description": "Test desc 2",
+  "Completed": true
+}
 
 ###

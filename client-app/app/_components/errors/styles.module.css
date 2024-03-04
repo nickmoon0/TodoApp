@@ -1,0 +1,25 @@
+.alertContainer {
+  position: fixed;
+  top: -100%; /* Start hidden above the viewport */
+  left: 0;
+  right: 0;
+  z-index: 1050; /* High z-index to ensure it's on top of everything */
+  display: flex;
+  justify-content: center;
+  animation: slideDown 0.5s forwards, slideUp 0.5s 2.5s forwards; /* Slide down and then up */
+}
+
+@keyframes slideDown {
+  to {
+    top: 0;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    top: 0;
+  }
+  to {
+    top: -100%;
+  }
+}
