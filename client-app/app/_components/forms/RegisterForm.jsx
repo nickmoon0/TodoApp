@@ -20,7 +20,7 @@ const RegisterForm = () => {
     const password = formData.get('password');
 
     try {
-      const response = await api.post("/user/create", { username, password });
+      const response = await api.post("/user/create", { username, password }, { withCredentials:true });
 
       const token = response.data.accessToken;
       setToken(token);
