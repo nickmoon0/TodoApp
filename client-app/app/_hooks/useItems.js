@@ -1,9 +1,15 @@
 import api from '@/lib/api';
 import { useState, useEffect } from 'react';
+import { useItemsContext } from '@/contexts/ItemsContext';
 
 const useItems = () => {
-  const [items, setItems] = useState([]);
-  const [showError, setShowError] = useState(false);
+  const { 
+    items,
+    setItems,
+    showError, 
+    setShowError 
+  } = useItemsContext();
+  
   const [errorMessage, setErrorMessage] = useState('');
 
   const triggerErrorAlert = () => {
@@ -13,23 +19,24 @@ const useItems = () => {
     }, 3000); // Show the alert for 3 seconds
   };
 
-  useEffect(() => {
-    const loadItems = async () => {
-      try {
-        const response = await api.get('/item/all');
-        setItems(response.data.items);
-      } catch (error) {
-        setErrorMessage('Failed to retrieve items.');
-        triggerErrorAlert();
-      }
+  const loadItems = async () => {
+    try {
+      const response = await api.get('/item/all');
+      setItems(response.data.items);
+    } catch (error) {
+      setErrorMessage('Failed to load items');
+      triggerErrorAlert();
     }
-    
+  };
+
+  useEffect(() => { 
     loadItems();
   }, []);
 
-  const handleItemUpdate = async (itemId, field, newValue) => {
+  const handleFieldUpdate = async (itemId, field, newValue) => {
     const updatedItems = items.map((item) => {
       if (item.itemId === itemId) {
+        // Return a copy of edited item with the new field value
         return { ...item, [field]: newValue };
       }
       return item;
@@ -43,7 +50,7 @@ const useItems = () => {
     } catch (error) {
       setErrorMessage('Failed to update item');
       triggerErrorAlert('Failed to update item.');
-      setItems(items); // Rollback changes on screen
+      setItems([...items]); // Rollback changes on screen
     }
   };
 
@@ -64,7 +71,7 @@ const useItems = () => {
     } catch (error) {
       setErrorMessage('Failed to update item.');
       triggerErrorAlert();
-      setItems(items); // Rollback changes on screen
+      setItems([...items]); // Rollback changes on screen
     }
   };
 
@@ -78,7 +85,36 @@ const useItems = () => {
     // TODO: Post/put updated items back to server as a list. Need to add endpoint to backend
   }
 
-  return { items, showError, errorMessage, handleItemUpdate, handleCheckboxChange, handleSelectAllChange };
+  const handleCreateItem = async (event) => {
+    event.preventDefault();
+
+    const formData = new FormData(event.currentTarget);
+    const item = {
+      name: formData.get('itemName'),
+      description: formData.get('itemDescription'),
+      completed: !!formData.get('itemCompleted')
+    }
+
+    try {
+      await api.post('/item/create', item);
+      document.getElementById('create_item_modal').close();
+      loadItems();
+    } catch (error) {
+      setErrorMessage('Failed to create new item');
+      triggerErrorAlert();
+    }
+  };
+
+  return { 
+    items, 
+    showError, 
+    errorMessage,
+    loadItems,
+    handleFieldUpdate, 
+    handleCheckboxChange, 
+    handleSelectAllChange,
+    handleCreateItem
+  };
 };
 
 export default useItems;

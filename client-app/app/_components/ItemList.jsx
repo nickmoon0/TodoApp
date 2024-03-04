@@ -1,11 +1,19 @@
 'use client';
-import React, { useEffect, useState } from 'react';
 import ErrorAlert from '@/components/errors/ErrorAlert';
 import EditableField from '@/components/EditableField';
-import useItems from '../_hooks/useItems';
+import useItems from '@/hooks/useItems';
+import { useItemsTest } from '@/contexts/ItemsContext';
+import { useEffect } from 'react';
 
 const ItemList = () => {
-  const { items, showError, errorMessage, handleItemUpdate, handleCheckboxChange, handleSelectAllChange } = useItems();
+  const { 
+    items,
+    showError,
+    errorMessage,
+    handleFieldUpdate,
+    handleCheckboxChange,
+    handleSelectAllChange,
+  } = useItems();
 
   return (
     <>
@@ -37,17 +45,16 @@ const ItemList = () => {
                   <EditableField
                     text={item.name}
                     placeHolderText='No Name'
-                    onTextChange={(newValue) => handleItemUpdate(item.itemId, 'name', newValue)}
+                    onTextChange={(newValue) => handleFieldUpdate(item.itemId, 'name', newValue)}
                   />
                 </td>
                 <td>
                   <EditableField
                     text={item.description}
                     placeHolderText='No Description'
-                    onTextChange={(newValue) => handleItemUpdate(item.itemId, 'description', newValue)}
+                    onTextChange={(newValue) => handleFieldUpdate(item.itemId, 'description', newValue)}
                   />
                 </td>
-
               </tr>
             ))}
           </tbody>
