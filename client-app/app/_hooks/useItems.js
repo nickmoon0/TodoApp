@@ -75,6 +75,19 @@ const useItems = () => {
     }
   };
 
+  const handleDeleteItem = async (index) => {
+    const deletedItem = items[index];
+    const newItemList = items.filter(x => x.itemId !== deletedItem.itemId);
+    
+    try {
+      await api.delete(`/item/delete/${deletedItem.itemId}`);
+      setItems(newItemList);
+    } catch (error) {
+      setErrorMessage('Failed to delete item');
+      triggerErrorAlert();
+    }
+  }
+
   const handleSelectAllChange = async (event) => {
     const isChecked = event.target.checked;
     const updatedItems = items.map((item, idx) => {
@@ -97,7 +110,8 @@ const useItems = () => {
 
     try {
       await api.post('/item/create', item);
-      document.getElementById('create_item_modal').close();
+      document.getElementById('create_item_modal').close(); // Close the create account popup
+      document.getElementById('new-item-form').reset(); // Clear form fields
       loadItems();
     } catch (error) {
       setErrorMessage('Failed to create new item');
@@ -111,7 +125,8 @@ const useItems = () => {
     errorMessage,
     loadItems,
     handleFieldUpdate, 
-    handleCheckboxChange, 
+    handleCheckboxChange,
+    handleDeleteItem,
     handleSelectAllChange,
     handleCreateItem
   };

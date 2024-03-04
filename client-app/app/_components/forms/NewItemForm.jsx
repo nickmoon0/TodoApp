@@ -5,6 +5,10 @@ import useItems from '@/hooks/useItems';
 const NewItemForm = () => {
   const { handleCreateItem } = useItems();
 
+  const clearForm = () => {
+    document.getElementById('new-item-form').reset();
+  };
+
   return (
     <>
       <form id="new-item-form" onSubmit={handleCreateItem} className='flex flex-col space-y-2 px-4 pb-4'>
@@ -18,7 +22,7 @@ const NewItemForm = () => {
       <div className="modal-action flex justify-end space-x-2">
         <button type="submit" form="new-item-form" className="btn btn-primary">Submit</button>
         <form method="dialog">
-          <button className="btn">Close</button>
+          <button onClick={clearForm} className="btn">Close</button>
         </form>
       </div>
     </>

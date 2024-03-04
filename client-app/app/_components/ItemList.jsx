@@ -4,6 +4,7 @@ import EditableField from '@/components/EditableField';
 import useItems from '@/hooks/useItems';
 import { useItemsTest } from '@/contexts/ItemsContext';
 import { useEffect } from 'react';
+import DeleteItemButton from './DeleteItemButton';
 
 const ItemList = () => {
   const { 
@@ -11,6 +12,7 @@ const ItemList = () => {
     showError,
     errorMessage,
     handleFieldUpdate,
+    handleDeleteItem,
     handleCheckboxChange,
     handleSelectAllChange,
   } = useItems();
@@ -29,6 +31,7 @@ const ItemList = () => {
               </th>
               <th>Name</th>
               <th>Description</th>
+              <th>Delete</th>
             </tr>
           </thead>
           <tbody>
@@ -54,6 +57,9 @@ const ItemList = () => {
                     placeHolderText='No Description'
                     onTextChange={(newValue) => handleFieldUpdate(item.itemId, 'description', newValue)}
                   />
+                </td>
+                <td>
+                  <DeleteItemButton onClickHandler={() => handleDeleteItem(index)}/>
                 </td>
               </tr>
             ))}
