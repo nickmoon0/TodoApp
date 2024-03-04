@@ -1,6 +1,7 @@
 import api from '@/lib/api';
 import { useState, useEffect } from 'react';
 import { useItemsContext } from '@/contexts/ItemsContext';
+import { useElementRefsContext } from '../_contexts/ElementRefsContext';
 
 const useItems = () => {
   const { 
@@ -9,7 +10,8 @@ const useItems = () => {
     showError, 
     setShowError 
   } = useItemsContext();
-  
+  const { newItemFormRef, createItemModalRef } = useElementRefsContext();
+
   const [errorMessage, setErrorMessage] = useState('');
 
   const triggerErrorAlert = () => {
@@ -110,8 +112,8 @@ const useItems = () => {
 
     try {
       await api.post('/item/create', item);
-      document.getElementById('create_item_modal').close(); // Close the create account popup
-      document.getElementById('new-item-form').reset(); // Clear form fields
+      createItemModalRef.current.close(); // Close the create account popup
+      newItemFormRef.current.reset(); // Clear form fields
       loadItems();
     } catch (error) {
       setErrorMessage('Failed to create new item');
