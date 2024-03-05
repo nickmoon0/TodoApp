@@ -1,6 +1,5 @@
 'use client';
-import React, { createContext, useContext, useState, useCallback } from 'react';
-import api from '@/lib/api';
+import React, { createContext, useContext, useState } from 'react';
 
 const ItemsContext = createContext();
 
