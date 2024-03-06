@@ -17,9 +17,8 @@ const RootPage = () => {
   }, [router]);
 
   return (
-    <div>
-      {/* TODO: Create loading screen */}
-      <p>Loading...</p>
+    <div className="flex items-center justify-center h-screen">
+      <span className="loading loading-spinner loading-lg"></span>
     </div>
   );
 }

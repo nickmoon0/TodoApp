@@ -1,9 +1,7 @@
 'use client';
-import ErrorAlert from '@/components/errors/ErrorAlert';
+import ErrorAlert from '@/components/errors/ErrorAlert/ErrorAlert';
 import EditableField from '@/components/EditableField';
 import useItems from '@/hooks/useItems';
-import { useItemsTest } from '@/contexts/ItemsContext';
-import { useEffect } from 'react';
 import DeleteItemButton from './DeleteItemButton';
 
 const ItemList = () => {

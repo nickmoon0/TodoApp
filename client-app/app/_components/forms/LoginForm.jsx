@@ -28,7 +28,7 @@ const LoginForm = () => {
     const password = formData.get('password');
 
     try {
-      const response = await api.post("/auth/login", { username, password });
+      const response = await api.post("/auth/login", { username, password }, { withCredentials: true });
       
       const token = response.data.accessToken;
       setToken(token);

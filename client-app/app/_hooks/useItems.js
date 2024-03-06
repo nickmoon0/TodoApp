@@ -2,6 +2,7 @@ import api from '@/lib/api';
 import { useState, useEffect } from 'react';
 import { useItemsContext } from '@/contexts/ItemsContext';
 import { useElementRefsContext } from '@/contexts/ElementRefsContext';
+import { useMessagesContext } from '@/contexts/MessagesContext';
 
 const useItems = () => {
   const { 
@@ -10,11 +11,11 @@ const useItems = () => {
     showError, 
     setShowError 
   } = useItemsContext();
+  const { errorMessage, setErrorMessage } = useMessagesContext();
   const { newItemFormRef, createItemModalRef } = useElementRefsContext();
 
-  const [errorMessage, setErrorMessage] = useState('');
-
-  const triggerErrorAlert = () => {
+  const triggerErrorAlert = (errorMsg) => {
+    setErrorMessage(errorMsg);
     setShowError(true);
     setTimeout(() => {
       setShowError(false);
@@ -26,8 +27,7 @@ const useItems = () => {
       const response = await api.get('/item/all');
       setItems(response.data.items);
     } catch (error) {
-      setErrorMessage('Failed to load items');
-      triggerErrorAlert();
+      triggerErrorAlert('Failed to load items');
     }
   };
 
@@ -50,7 +50,6 @@ const useItems = () => {
     try {
       await api.put(`/item/update/${itemId}`, updatedItem);
     } catch (error) {
-      setErrorMessage('Failed to update item');
       triggerErrorAlert('Failed to update item.');
       setItems([...items]); // Rollback changes on screen
     }
@@ -71,8 +70,7 @@ const useItems = () => {
     try {
       await api.put(`/item/update/${updatedItem.itemId}`, updatedItem);
     } catch (error) {
-      setErrorMessage('Failed to update item.');
-      triggerErrorAlert();
+      triggerErrorAlert('Failed to update item.');
       setItems([...items]); // Rollback changes on screen
     }
   };
@@ -85,8 +83,7 @@ const useItems = () => {
       await api.delete(`/item/delete/${deletedItem.itemId}`);
       setItems(newItemList);
     } catch (error) {
-      setErrorMessage('Failed to delete item');
-      triggerErrorAlert();
+      triggerErrorAlert('Failed to delete item');
     }
   }
 
@@ -112,12 +109,13 @@ const useItems = () => {
 
     try {
       await api.post('/item/create', item);
+      
       createItemModalRef.current.close(); // Close the create account popup
       newItemFormRef.current.reset(); // Clear form fields
+      
       loadItems();
     } catch (error) {
-      setErrorMessage('Failed to create new item');
-      triggerErrorAlert();
+      triggerErrorAlert('Failed to create new item');
     }
   };
 
