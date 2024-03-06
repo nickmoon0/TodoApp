@@ -1,0 +1,10 @@
+.grid-rows-auto-height {
+  grid-template-rows: auto;
+}
+
+/* styles.module.css */
+.vertically-center {
+  display: flex;
+  align-items: center;
+  height: 100%; /* Ensure the div takes full height of its grid area */
+}

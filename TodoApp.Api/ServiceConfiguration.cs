@@ -7,6 +7,8 @@ namespace TodoApp.Api;
 
 public static class ServiceConfiguration
 {
+    public const string LocalhostCORSPolicy = "AllowLocalhost3000";
+
     public static IServiceCollection RegisterApiServices(this IServiceCollection services)
     {
         services.AddTransient<IUserService, UserService>();
@@ -43,5 +45,21 @@ public static class ServiceConfiguration
         builder.Services.AddAuthorization();
         
         return builder;
+    }
+
+    public static IServiceCollection ConfigureCors(this IServiceCollection services)
+    {
+        services.AddCors(options =>
+        {
+            options.AddPolicy(LocalhostCORSPolicy, 
+                builder => builder
+                    .WithOrigins("http://localhost:3000")
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .AllowCredentials()
+                );
+        });
+
+        return services;
     }
 }

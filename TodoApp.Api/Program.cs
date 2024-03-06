@@ -2,7 +2,7 @@ using TodoApp.Application;
 using TodoApp.Api;
 using TodoApp.Api.Endpoints;
 using TodoApp.Infrastructure;
-using TodoApp.Infrastructure.Settings;
+using ServiceConfiguration = TodoApp.Api.ServiceConfiguration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +14,7 @@ builder.Configuration.AddJsonFile("appsettings.Local.json");
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.ConfigureCors();
 builder.Services.RegisterInfrastructure();
 builder.Services.RegisterApplicationServices();
 builder.Services.RegisterApiServices();
@@ -29,6 +30,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors(ServiceConfiguration.LocalhostCORSPolicy);
 
 app.UseHttpsRedirection();
 

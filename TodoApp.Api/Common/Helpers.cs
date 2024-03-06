@@ -9,7 +9,7 @@ public static class Helpers
         {
             HttpOnly = true,
             Secure = false,
-            SameSite = SameSiteMode.Strict,
+            SameSite = SameSiteMode.Lax,
             Expires = DateTimeOffset.UtcNow.AddDays(7)
         };
         context.Response.Cookies.Append("RefreshToken", token, cookieOptions);
