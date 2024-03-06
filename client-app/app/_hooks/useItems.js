@@ -1,5 +1,5 @@
 import api from '@/lib/api';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useItemsContext } from '@/contexts/ItemsContext';
 import { useElementRefsContext } from '@/contexts/ElementRefsContext';
 import { useMessagesContext } from '@/contexts/MessagesContext';
@@ -121,14 +121,15 @@ const useItems = () => {
 
   return { 
     items, 
-    showError, 
+    showError,
     errorMessage,
     loadItems,
     handleFieldUpdate, 
     handleCheckboxChange,
     handleDeleteItem,
     handleSelectAllChange,
-    handleCreateItem
+    handleCreateItem,
+    triggerErrorAlert
   };
 };
 
