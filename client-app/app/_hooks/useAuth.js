@@ -1,5 +1,5 @@
 import api from "@/lib/api";
-import { deleteToken } from "@/lib/getToken";
+import { setToken, deleteToken } from "@/lib/getToken";
 import useItems from "./useItems";
 import { useRouter } from "next/navigation";
 
@@ -18,8 +18,36 @@ const useAuth = () => {
     }
   };
 
+  const handleLogin = async ({username, password}, errorCallback) => {
+    try {
+      const response = await api.post("/auth/login", { username, password }, { withCredentials: true });
+      
+      const token = response.data.accessToken;
+      setToken(token);
+      
+      router.push('/home');
+    } catch (error) {
+      errorCallback(error);
+    }
+  };
+
+  const handleRegister = async ({ username, password }, errorCallback) => {
+    try {
+      const response = await api.post("/user/create", { username, password }, { withCredentials:true });
+
+      const token = response.data.accessToken;
+      setToken(token);
+      
+      router.push('/home');
+    } catch (error) {
+      errorCallback(error);
+    }
+  };
+
   return {
-    handleLogout
+    handleLogout,
+    handleLogin,
+    handleRegister
   }
 };
 
