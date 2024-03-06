@@ -28,15 +28,28 @@ public class RenewAccessTokenHandler : IHandler<RenewAccessTokenCommand, RenewAc
     {
         // Get token
         var token = await _tokenRepository.GetTokenAsync(command.RefreshToken);
-        if (token == null || token.ExpiryDate < DateTime.UtcNow)
+        
+        // Check if token exists
+        if (token == null)
         {
-            _logger.LogInformation("Token does not exist or has expired");
+            _logger.LogInformation("Token does not exist");
             return new RenewAccessTokenResponse
             {
                 Success = false,
                 StatusCode = StatusCodes.Status401Unauthorized
             };
-        }   
+        }
+
+        // Check if token is still valid
+        if (token.ExpiryDate < DateTime.Now || !token.Valid)
+        {
+            _logger.LogInformation("Token is no longer valid (Expired or valid=false)");
+            return new RenewAccessTokenResponse
+            {
+                Success = false,
+                StatusCode = StatusCodes.Status401Unauthorized
+            };
+        }
         
         // Get user
         var user = await _userRepository.GetUserByIdAsync(token.UserId);

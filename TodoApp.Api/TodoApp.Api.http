@@ -36,3 +36,7 @@ Authorization: Bearer
 }
 
 ###
+GET {{TodoApp.Api_HostAddress}}/auth/logout
+Authorization: Bearer 
+
+###

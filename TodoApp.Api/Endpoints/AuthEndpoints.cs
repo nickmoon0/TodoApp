@@ -13,6 +13,11 @@ public static class AuthEndpoints
             .WithOpenApi();
 
         var service = app.Services.GetRequiredService<IAuthService>();
+
+        group.MapGet("/logout", service.LogoutUser)
+            .RequireAuthorization()
+            .WithSummary("Logs out user")
+            .Produces(StatusCodes.Status204NoContent);
         
         group.MapPost("/login", service.LoginUser)
             .WithSummary("Logs in a user and returns a token")
