@@ -3,21 +3,13 @@ import api from '@/lib/api';
 import { useRouter } from 'next/navigation';
 import React, { useState, useEffect } from 'react'
 import ErrorMessage from '@/components/errors/ErrorMessage';
-import { getToken, setToken } from '@/lib/getToken';
+import { setToken } from '@/lib/getToken';
 
 const LoginForm = () => {
   const router = useRouter();
   const [errorMessage, setErrorMessage] = useState('');
   const [username, setUsername] = useState(''); // Only used to check if field has value
   const [password, setPassword] = useState(''); // Only used to check if field has value
-
-  useEffect(() => {
-    // Send to homepage if a valid access token is present
-    const token = getToken();
-    if (token) {
-      router.replace('/home');
-    }
-  }, [router]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
