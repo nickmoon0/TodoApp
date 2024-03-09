@@ -1,5 +1,4 @@
-import api from '@/lib/api';
-import { useState, useEffect } from 'react';
+import { useApi } from './useApi';
 import { useItemsContext } from '@/contexts/ItemsContext';
 import { useElementRefsContext } from '@/contexts/ElementRefsContext';
 import { useMessagesContext } from '@/contexts/MessagesContext';
@@ -11,8 +10,11 @@ const useItems = () => {
     showError, 
     setShowError 
   } = useItemsContext();
+
   const { errorMessage, setErrorMessage } = useMessagesContext();
   const { newItemFormRef, createItemModalRef } = useElementRefsContext();
+
+  const { api } = useApi();
 
   const triggerErrorAlert = (errorMsg) => {
     setErrorMessage(errorMsg);
@@ -30,10 +32,6 @@ const useItems = () => {
       triggerErrorAlert('Failed to load items');
     }
   };
-
-  useEffect(() => { 
-    loadItems();
-  }, []);
 
   const handleFieldUpdate = async (itemId, field, newValue) => {
     const updatedItems = items.map((item) => {
@@ -121,14 +119,15 @@ const useItems = () => {
 
   return { 
     items, 
-    showError, 
+    showError,
     errorMessage,
     loadItems,
     handleFieldUpdate, 
     handleCheckboxChange,
     handleDeleteItem,
     handleSelectAllChange,
-    handleCreateItem
+    handleCreateItem,
+    triggerErrorAlert
   };
 };
 

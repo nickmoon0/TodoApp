@@ -3,6 +3,7 @@ import ItemList from '@/components/ItemList'
 import styles from './styles.module.css';
 import NewItemButton from '@/components/NewItemButton';
 import NewItemModal from '@/components/NewItemModal';
+import LogoutButton from '@/components/LogoutButton';
 
 const HomePage = () => {
   return (
@@ -15,6 +16,9 @@ const HomePage = () => {
           </div>
           <div className='col-start-8 col-span-1'>
             <NewItemButton />
+          </div>
+          <div className='col-start-12 col-span-1'>
+            <LogoutButton />
           </div>
         </div>
         <div className='grid grid-cols-12 py-4'>

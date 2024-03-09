@@ -2,8 +2,10 @@ using Microsoft.AspNetCore.Mvc;
 using TodoApp.Api.Common;
 using TodoApp.Api.Contracts.Requests;
 using TodoApp.Api.Contracts.Responses;
+using TodoApp.Application.Common;
 using TodoApp.Application.Features;
 using TodoApp.Application.Features.Auth.LoginUser;
+using TodoApp.Application.Features.Auth.LogoutUser;
 using TodoApp.Application.Features.Auth.RenewAccessToken;
 
 namespace TodoApp.Api.Services;
@@ -11,12 +13,29 @@ namespace TodoApp.Api.Services;
 public class AuthService : IAuthService
 {
     private readonly ILogger<AuthService> _logger;
-    
-    public AuthService(ILogger<AuthService> logger)
+    private readonly ITokenService _tokenService;
+    public AuthService(ILogger<AuthService> logger, ITokenService tokenService)
     {
         _logger = logger;
+        _tokenService = tokenService;
     }
 
+    public async Task<IResult> LogoutUser(HttpContext context, [FromServices] IHandler<LogoutUserCommand, LogoutUserResponse> handler)
+    {
+        var token = context.Request.Headers.Authorization[0]!.Split(' ')[1];
+        var userId = _tokenService.ExtractUserIdFromAccessToken(token);
+
+        var command = new LogoutUserCommand
+        {
+            UserId = userId
+        };
+
+        await handler.Handle(command);
+        
+        Helpers.InvalidateRefreshTokenCookie(context);
+        return TypedResults.NoContent();
+    }
+    
     public async Task<IResult> LoginUser(
         HttpContext context,
         [FromBody] LoginUserContract contract, 
