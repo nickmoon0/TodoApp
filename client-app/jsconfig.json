@@ -5,7 +5,6 @@
       "@/hooks/*": ["./app/_hooks/*"],
       "@/components/*": ["./app/_components/*"],
       "@/styles/*": ["./app/_styles/*"],
-      "@/lib/*": ["./app/_lib/*"],
       "@/contexts/*": ["./app/_contexts/*"],
       "@/middleware/*": ["./middleware/*"]
     }

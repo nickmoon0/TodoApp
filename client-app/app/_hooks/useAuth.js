@@ -1,12 +1,15 @@
-import api from "@/lib/api";
-import { setToken, deleteToken } from "@/lib/getToken";
 import useItems from "./useItems";
 import { useRouter } from "next/navigation";
+import { useApi } from "./useApi";
+import { useToken } from "./useToken";
 
 const useAuth = () => {
   const router = useRouter();
-  const { triggerErrorAlert } = useItems();
   
+  const { api } = useApi();
+  const { setToken, deleteToken } = useToken();
+  const { triggerErrorAlert } = useItems();
+
   const handleLogout = async () => {
     try {
       await api.get('/auth/logout', { withCredentials: true });

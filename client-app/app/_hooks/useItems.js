@@ -1,4 +1,4 @@
-import api from '@/lib/api';
+import { useApi } from './useApi';
 import { useItemsContext } from '@/contexts/ItemsContext';
 import { useElementRefsContext } from '@/contexts/ElementRefsContext';
 import { useMessagesContext } from '@/contexts/MessagesContext';
@@ -13,6 +13,8 @@ const useItems = () => {
 
   const { errorMessage, setErrorMessage } = useMessagesContext();
   const { newItemFormRef, createItemModalRef } = useElementRefsContext();
+
+  const { api } = useApi();
 
   const triggerErrorAlert = (errorMsg) => {
     setErrorMessage(errorMsg);
