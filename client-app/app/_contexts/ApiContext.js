@@ -9,7 +9,7 @@ const ApiContext = createContext();
 export const useApiContext = () => useContext(ApiContext);
 
 export const ApiProvider = ({ children }) => {
-  const { token, setToken } = useToken();
+  const { getToken, setToken } = useToken();
 
   const api = useMemo(() => {
     const instance = axios.create({
@@ -18,6 +18,7 @@ export const ApiProvider = ({ children }) => {
 
     // Request interceptor
     instance.interceptors.request.use((config) => {
+      const token = getToken();
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;
       }
@@ -56,7 +57,7 @@ export const ApiProvider = ({ children }) => {
       });
 
     return instance;
-  }, [token, setToken]);
+  }, [getToken, setToken]);
 
   return (
     <ApiContext.Provider value={api}>
