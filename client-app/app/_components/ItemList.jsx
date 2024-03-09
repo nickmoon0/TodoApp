@@ -1,4 +1,5 @@
 'use client';
+import { useEffect } from 'react';
 import ErrorAlert from '@/components/errors/ErrorAlert/ErrorAlert';
 import EditableField from '@/components/EditableField';
 import useItems from '@/hooks/useItems';
@@ -9,11 +10,16 @@ const ItemList = () => {
     items,
     showError,
     errorMessage,
+    loadItems,
     handleFieldUpdate,
     handleDeleteItem,
     handleCheckboxChange,
     handleSelectAllChange,
   } = useItems();
+
+  useEffect(() => { 
+    loadItems();
+  }, []);
 
   return (
     <>

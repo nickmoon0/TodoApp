@@ -1,15 +1,14 @@
 'use client';
-import api from '@/lib/api';
-import { useRouter } from 'next/navigation';
 import React, { useState } from 'react'
 import ErrorMessage from '@/components/errors/ErrorMessage';
-import { setToken } from '@/lib/getToken';
+import useAuth from '@/hooks/useAuth';
 
 const RegisterForm = () => {
-  const router = useRouter();
   const [errorMessage, setErrorMessage] = useState('');
   const [username, setUsername] = useState(''); // Only used to check if field has value
   const [password, setPassword] = useState(''); // Only used to check if field has value
+
+  const { handleRegister } = useAuth();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -19,16 +18,9 @@ const RegisterForm = () => {
     const username = formData.get('username');
     const password = formData.get('password');
 
-    try {
-      const response = await api.post("/user/create", { username, password }, { withCredentials:true });
-
-      const token = response.data.accessToken;
-      setToken(token);
-      
-      router.push('/home');
-    } catch (error) {
+    await handleRegister({ username, password }, () => {
       setErrorMessage('Failed to create account.');
-    }
+    });
   }
 
   return (
