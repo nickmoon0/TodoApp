@@ -1,4 +1,3 @@
-'use client';
 export const useToken = () => {
   const tokenName = process.env.NEXT_PUBLIC_ACCESS_TOKEN;
 
