@@ -1,11 +1,11 @@
-import { useTokenContext } from '@/contexts/TokenContext';
-
 export const useToken = () => {
-  const { token, setToken } = useTokenContext();
+  const tokenName = process.env.NEXT_PUBLIC_ACCESS_TOKEN;
 
-  const deleteToken = () => setToken('');
+  const getToken = () => localStorage.getItem(tokenName);
+  const setToken = (token) => localStorage.setItem(tokenName, token);
+  const deleteToken = () => localStorage.removeItem(tokenName);
 
   return {
-    token, setToken, deleteToken
-  }
+    getToken, setToken, deleteToken
+  };
 };

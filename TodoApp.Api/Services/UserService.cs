@@ -36,7 +36,9 @@ public class UserService : IUserService
                 Success = result.Success,
                 StatusCode = result.StatusCode
             };
-            Helpers.AddRefreshTokenCookie(context, result.RefreshToken!);
+            
+            TokenHelpers.AddRefreshTokenCookie(context, result.RefreshToken!);
+            TokenHelpers.AddAccessTokenCookie(context, result.AccessToken!);
             
             _logger.LogInformation("Request was processed successfully");
             return TypedResults.Ok(response);
