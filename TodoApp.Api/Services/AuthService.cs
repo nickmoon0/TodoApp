@@ -22,7 +22,7 @@ public class AuthService : IAuthService
 
     public async Task<IResult> LogoutUser(HttpContext context, [FromServices] IHandler<LogoutUserCommand, LogoutUserResponse> handler)
     {
-        var token = context.Request.Headers.Authorization[0]!.Split(' ')[1];
+        var token = TokenHelpers.GetAccessToken(context)!;
         var userId = _tokenService.ExtractUserIdFromAccessToken(token);
 
         var command = new LogoutUserCommand
@@ -32,7 +32,9 @@ public class AuthService : IAuthService
 
         await handler.Handle(command);
         
-        Helpers.InvalidateRefreshTokenCookie(context);
+        TokenHelpers.InvalidateRefreshTokenCookie(context);
+        TokenHelpers.InvalidateAccessTokenCookie(context);
+        
         return TypedResults.NoContent();
     }
     
@@ -55,7 +57,9 @@ public class AuthService : IAuthService
         {
             _logger.LogInformation("User {Username} has authenticated", contract.Username);
             
-            Helpers.AddRefreshTokenCookie(context, response.RefreshToken!);
+            TokenHelpers.AddRefreshTokenCookie(context, response.RefreshToken!);
+            TokenHelpers.AddAccessTokenCookie(context, response.AccessToken!);
+            
             return TypedResults.Ok(new LoginUserResponseContract
             {
                 AccessToken = response.AccessToken,
@@ -88,7 +92,9 @@ public class AuthService : IAuthService
         {
             _logger.LogInformation("Replaced access token with token {AccessToken}", response.AccessToken);
             
-            Helpers.AddRefreshTokenCookie(context, response.RefreshToken!);
+            TokenHelpers.AddRefreshTokenCookie(context, response.RefreshToken!);
+            TokenHelpers.AddAccessTokenCookie(context, response.AccessToken!);
+            
             return TypedResults.Ok(new RenewAccessTokenResponseContract
             {
                 AccessToken = response.AccessToken,
