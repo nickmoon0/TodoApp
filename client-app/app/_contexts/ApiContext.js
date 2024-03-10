@@ -1,5 +1,3 @@
-'use client';
-
 import React, { createContext, useContext, useMemo } from 'react';
 import axios from 'axios';
 import { useToken } from '@/hooks/useToken';
