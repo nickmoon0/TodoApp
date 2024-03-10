@@ -106,12 +106,14 @@ const useItems = () => {
     }
 
     try {
-      await api.post('/item/create', item);
+      const response = await api.post('/item/create', item);
+      const newItem = response.data;
       
       createItemModalRef.current.close(); // Close the create account popup
       newItemFormRef.current.reset(); // Clear form fields
       
-      loadItems();
+      const updatedItems = [...items, newItem];
+      setItems(updatedItems);
     } catch (error) {
       triggerErrorAlert('Failed to create new item');
     }
